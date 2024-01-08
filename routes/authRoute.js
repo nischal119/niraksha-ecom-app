@@ -37,3 +37,8 @@ router.get("/test", requireSignin, isAdmin, testController);
 router.get("/user-auth", requireSigninProtected, (req, res) => {
   res.status(200).send({ ok: true });
 });
+
+//Admin Route
+router.get("/admin-auth", requireSigninProtected, isAdmin, (req, res) => {
+  res.status(200).send({ ok: true });
+});

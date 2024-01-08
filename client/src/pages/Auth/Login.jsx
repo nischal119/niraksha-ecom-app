@@ -32,7 +32,7 @@ const Login = () => {
         navigate(location.state || "/");
       }
     } catch (error) {
-      toast.error(error.res.data.message);
+      toast.error(error.response.data.message);
     }
   };
 
