@@ -1,10 +1,9 @@
 import express from "express";
 import {
-  checkEmailController,
   forgotPasswordController,
   loginController,
   registerController,
-  testController,
+  testController
 } from "../controllers/authController.js";
 import {
   isAdmin,
