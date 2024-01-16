@@ -5,6 +5,7 @@ import morgan from "morgan";
 import connectDB from "./config/db.js";
 import authRoute from "./routes/authRoute.js";
 import creategoryRoute from "./routes/categoryRoutes.js";
+import productRoute from "./routes/porductRoute.js";
 //dotenv config
 dotenv.config();
 
@@ -24,6 +25,7 @@ app.use(morgan("dev"));
 //routing
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/category", creategoryRoute);
+app.use("/api/v1/product", productRoute);
 
 //rest API
 
