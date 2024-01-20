@@ -6,6 +6,12 @@ import userModel from "../models/userModel.js";
 export const requireSignin = (req, res, next) => {
   const request = req.headers.authorization.split(" ");
   const token = request[1];
+  if (!token) {
+    return res.status(401).json({
+      success: false,
+      message: "Token not found",
+    });
+  }
   try {
     const decode = JWT.verify(token, process.env.JWT_SECRET);
 
@@ -44,7 +50,7 @@ export const isAdmin = async (req, res, next) => {
     if (user.role !== 1) {
       return res.status(401).send({
         success: false,
-        message: "Unauthorized",
+        message: "Unauthorized in Admin Middleware",
       });
     }
     next();
