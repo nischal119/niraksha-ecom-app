@@ -5,24 +5,32 @@ import userModel from "../models/userModel.js";
 
 export const requireSignin = (req, res, next) => {
   const request = req.headers.authorization.split(" ");
-  const token = request[1];
-  if (!token) {
-    return res.status(401).json({
-      success: false,
-      message: "Token not found",
-    });
-  }
-  try {
+  if (request.length !== 2) {
+    console.log("first");
+    const token = req?.headers?.authorization;
     const decode = JWT.verify(token, process.env.JWT_SECRET);
-
     req.user = decode;
     next();
-  } catch (error) {
-    console.log(error);
-    return res.status(401).json({
-      success: false,
-      message: "Unauthorized",
-    });
+  } else {
+    const token = request[1];
+    if (!token) {
+      return res.status(401).json({
+        success: false,
+        message: "Token not found",
+      });
+    }
+    try {
+      const decode = JWT.verify(token, process.env.JWT_SECRET);
+
+      req.user = decode;
+      next();
+    } catch (error) {
+      console.log(error);
+      return res.status(401).json({
+        success: false,
+        message: "Unauthorized",
+      });
+    }
   }
 };
 export const requireSigninProtected = (req, res, next) => {

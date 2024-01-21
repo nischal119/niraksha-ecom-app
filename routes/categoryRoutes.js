@@ -1,17 +1,16 @@
 import express from "express";
 import {
-  isAdmin,
-  requireSignin,
-  requireSigninProtected,
-} from "../middleware/authMiddleware.js";
-import {
   createCategoryController,
   deleteCategoryController,
   getCategoriesController,
   singleCategoryController,
   updateCategoryController,
 } from "../controllers/categoryController.js";
-import { get } from "mongoose";
+import {
+  isAdmin,
+  requireSignin
+} from "../middleware/authMiddleware.js";
+
 
 const router = express.Router();
 
@@ -19,7 +18,7 @@ const router = express.Router();
 
 router.post(
   "/create-category",
-  requireSigninProtected,
+  requireSignin,
   isAdmin,
   createCategoryController
 );

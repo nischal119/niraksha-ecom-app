@@ -7,12 +7,12 @@ const CategoryForm = ({ handelSubmit, value, setValue }) => {
         <div className="form-group d-flex">
           <input
             type="text"
-            className="form-control"
+            className="form-control ms-2"
             placeholder="Enter new category name"
             value={value}
             onChange={(e) => setValue(e.target.value)}
           />
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn btn-primary ms-2">
             Submit
           </button>
         </div>
