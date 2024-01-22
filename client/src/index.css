@@ -131,3 +131,10 @@
 .red-star {
   color: red;
 }
+
+/* product page */
+.product-link
+{
+  text-decoration: none;
+  color: #000;
+}

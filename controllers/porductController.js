@@ -95,7 +95,7 @@ export const updateProductController = async (req, res) => {
 
     const { name, description, quantity, price } = req.fields;
     const { photo } = req.files;
-    if (!name || !description || !quantity || !price || !photo) {
+    if (!name || !description || !quantity || !price ) {
       return res.status(400).send({
         message: "All fields are required",
         success: false,
