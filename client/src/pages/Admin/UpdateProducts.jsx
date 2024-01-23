@@ -95,7 +95,7 @@ const UpdateProducts = () => {
       const { data } = await axios.delete(
         `http://localhost:8080/api/v1/product/delete-product/${id}`
       );
-      toast.success(data?.message);
+      toast.success(data?.message);ev
       navigate("/dashboard/admin/products");
     } catch (error) {
       console.log(error);

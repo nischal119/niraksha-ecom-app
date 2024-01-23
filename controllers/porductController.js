@@ -95,7 +95,7 @@ export const updateProductController = async (req, res) => {
 
     const { name, description, quantity, price } = req.fields;
     const { photo } = req.files;
-    if (!name || !description || !quantity || !price ) {
+    if (!name || !description || !quantity || !price) {
       return res.status(400).send({
         message: "All fields are required",
         success: false,
@@ -181,6 +181,84 @@ export const productPhotoController = async (req, res) => {
     console.log(error);
     res.status(500).send({
       message: "Error while getting photo",
+      success: false,
+      error,
+    });
+  }
+};
+
+//filter products
+export const productsFilterController = async (req, res) => {
+  try {
+    const { checked, radio } = req.body;
+    let args = {};
+    if (checked.length > 0) {
+      args.category = checked;
+    }
+    if (radio.length) {
+      args.price = {
+        $gte: radio[0],
+        $lte: radio[1],
+      };
+    }
+    const products = await productModel.find(args);
+    // console.log(products);
+    res.status(200).send({
+      message: "Filtered products",
+      success: true,
+      products,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Error while filtering products",
+      success: false,
+      error,
+    });
+  }
+};
+
+//product count
+
+export const productCountController = async (req, res) => {
+  try {
+    const total = await productModel.find({}).estimatedDocumentCount();
+    res.status(200).send({
+      message: "Product count",
+      success: true,
+      total,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Error while getting product count",
+      success: false,
+      error,
+    });
+  }
+};
+
+//product per page
+
+export const productListController = async (req, res) => {
+  try {
+    const perPage = 6;
+    const page = req.params.page || 1;
+    const products = await productModel
+      .find({})
+      .select("-photo")
+      .skip((page - 1) * perPage)
+      .limit(perPage)
+      .sort({ createdAt: -1 });
+    res.status(200).send({
+      message: "Products per page",
+      success: true,
+      products,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Error while getting product per page",
       success: false,
       error,
     });
