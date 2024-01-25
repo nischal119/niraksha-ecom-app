@@ -5,7 +5,6 @@ import Contact from "./pages/Contact";
 import Policy from "./pages/Policy";
 import PagenotFound from "./pages/PagenotFound";
 import Register from "./pages/Auth/Register";
-
 import "react-toastify/dist/ReactToastify.css";
 import Login from "./pages/Auth/Login";
 import Dashboard from "./pages/user/Dashboard";
@@ -20,11 +19,15 @@ import Orders from "./pages/user/Orders.jsx";
 import Profile from "./pages/user/Profile.jsx";
 import Products from "./pages/Admin/Products.jsx";
 import UpdateProducts from "./pages/Admin/UpdateProducts.jsx";
+import Search from "./Search.jsx";
+import ProductDetails from "./pages/ProductDetails.jsx";
 function App() {
   return (
     <>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/product/:slug" element={<ProductDetails />} />
+        <Route path="/search" element={<Search />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/policy" element={<Policy />} />

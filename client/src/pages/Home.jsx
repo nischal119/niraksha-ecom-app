@@ -9,6 +9,7 @@ import { Checkbox, Radio } from "antd";
 import { Prices } from "../components/Prices.js";
 import { Spin } from "antd";
 import { set } from "mongoose";
+import { useNavigate } from "react-router-dom";
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -17,7 +18,7 @@ const Home = () => {
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
   //get total count
 
   const getProducts = async () => {
@@ -180,7 +181,10 @@ const Home = () => {
                       {item?.description.substring(0, 30)}...
                     </p>
                     <p className="card-text">Rs.{item?.price}</p>
-                    <button className="btn btn-success w-100 mb-3">
+                    <button
+                      className="btn btn-success w-100 mb-3"
+                      onClick={() => navigate(`/product/${item?.slug}`)}
+                    >
                       <CiSearch />
                     </button>
                     <button className="btn btn-primary w-100">

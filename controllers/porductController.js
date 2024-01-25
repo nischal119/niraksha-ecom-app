@@ -2,6 +2,7 @@ import productModel from "../models/productModel.js";
 import slugify from "slugify";
 import fs from "fs";
 import e from "express";
+import exp from "constants";
 
 export const createProductController = async (req, res) => {
   try {
@@ -259,6 +260,53 @@ export const productListController = async (req, res) => {
     console.log(error);
     res.status(500).send({
       message: "Error while getting product per page",
+      success: false,
+      error,
+    });
+  }
+};
+
+//search product
+export const searchProductController = async (req, res) => {
+  try {
+    const { keyword } = req.params;
+    const results = await productModel
+      .find({
+        $or: [
+          { name: { $regex: keyword, $options: "i" } },
+          { description: { $regex: keyword, $options: "i" } },
+        ],
+      })
+      .select("-photo");
+    res.json(results);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Error while searching product",
+      success: false,
+      error,
+    });
+  }
+};
+
+//similar products
+export const getSimilarProductsController = async (req, res) => {
+  try {
+    const { pid, cid } = req.params;
+    const products = await productModel
+      .find({ _id: { $ne: pid }, category: cid })
+      .limit(3)
+      .select("-photo")
+      .populate("category");
+    res.status(200).send({
+      message: "Similar products",
+      success: true,
+      products,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Error while getting similar products",
       success: false,
       error,
     });

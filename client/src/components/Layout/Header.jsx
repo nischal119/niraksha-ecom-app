@@ -3,6 +3,7 @@ import { Link, NavLink } from "react-router-dom";
 import { FaOpencart } from "react-icons/fa";
 import { useAuth } from "../../context/Auth.jsx";
 import toast from "react-hot-toast";
+import SearchInput from "../Form/SearchInput.jsx";
 
 const Header = () => {
   const [auth, setAuth] = useAuth();
@@ -22,7 +23,7 @@ const Header = () => {
       <nav className="navbar navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
           <Link className="navbar-brand " to="/">
-            <FaOpencart style={{ fontSize: "30px", margin: "10px" }} />{" "}
+            <FaOpencart style={{ fontSize: "30px", margin: "10px" }} />
             E-commerce
           </Link>
           <button
@@ -38,6 +39,8 @@ const Header = () => {
           </button>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+              <SearchInput />
+
               <li className="nav-item">
                 <NavLink className="nav-link " to="/">
                   Home
@@ -96,6 +99,7 @@ const Header = () => {
                   </li>
                 </>
               )}
+
               <li className="nav-item">
                 <NavLink className="nav-link" to="/cart">
                   Cart (0)
