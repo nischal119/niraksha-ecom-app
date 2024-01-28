@@ -130,10 +130,10 @@ const Home = () => {
 
   return (
     <Layout title={"All products - Best offers"}>
-      <div className="row mt-3">
+      <div className="row mt-3 px-1">
         <div className="col-md-3">
           <h4 className="text-center ">Filter by category</h4>
-          <div className="d-flex flex-column">
+          <div className="d-flex flex-column ">
             {categories?.map((item) => (
               <Checkbox
                 key={item._id}
@@ -149,11 +149,14 @@ const Home = () => {
             <Radio.Group
               value={radio}
               onChange={(e) => setRadio(e.target.value)}
+              className="flex-column"
             >
               {Prices.map((item) => (
-                <Radio key={item._id} value={item.array}>
-                  {item.name}
-                </Radio>
+                <div className="flex-column">
+                  <Radio key={item._id} value={item.array}>
+                    {item.name}
+                  </Radio>
+                </div>
               ))}
             </Radio.Group>
 

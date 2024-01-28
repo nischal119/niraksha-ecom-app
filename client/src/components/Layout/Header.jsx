@@ -4,10 +4,10 @@ import { FaOpencart } from "react-icons/fa";
 import { useAuth } from "../../context/Auth.jsx";
 import toast from "react-hot-toast";
 import SearchInput from "../Form/SearchInput.jsx";
-
+import useCategory from "../../hooks/useCategory.js";
 const Header = () => {
   const [auth, setAuth] = useAuth();
-
+  const categories = useCategory();
   const handelLogout = () => {
     setAuth({
       ...auth,
@@ -46,11 +46,40 @@ const Header = () => {
                   Home
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink className="nav-link " to="/category">
-                  Category
-                </NavLink>
+              <li className="nav-item dropdown">
+                <Link
+                  className="nav-link dropdown-toggle"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  // aria-expanded="false"
+                  to={"/categories"}
+                >
+                  Categories
+                </Link>
+
+                <ul
+                  className="dropdown-menu"
+                  style={{
+                    maxHeight: "150px",
+                    overflowY: "scroll",
+                  }}
+                >
+                  <li>
+                    <Link className="dropdown-item " to={"/categories"}>
+                      All Categories
+                    </Link>
+                  </li>
+                  {categories?.map((item) => (
+                    <Link
+                      className="dropdown-item "
+                      to={`/category/${item.slug}`}
+                    >
+                      <li key={item?._id}>{item?.name}</li>
+                    </Link>
+                  ))}
+                </ul>
               </li>
+
               {!auth.user ? (
                 <>
                   <li className="nav-item">

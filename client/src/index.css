@@ -24,7 +24,7 @@
   font-weight: 300 !important;
 }
 .active {
-  border-bottom: 2px solid #ffa012;
+  /* border-bottom: 2px solid #ffa012; */
 }
 .navbar-brand {
   font-weight: 700;
@@ -133,8 +133,7 @@
 }
 
 /* product page */
-.product-link
-{
+.product-link {
   text-decoration: none;
   color: #000;
 }

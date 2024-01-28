@@ -21,12 +21,16 @@ import Products from "./pages/Admin/Products.jsx";
 import UpdateProducts from "./pages/Admin/UpdateProducts.jsx";
 import Search from "./Search.jsx";
 import ProductDetails from "./pages/ProductDetails.jsx";
+import Categories from "./pages/Categories.jsx";
+import CategoryProduct from "./pages/CategoryProduct.jsx";
 function App() {
   return (
     <>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/product/:slug" element={<ProductDetails />} />
+        <Route path="/categories" element={<Categories />} />
+        <Route path="/category/:slug" element={<CategoryProduct />} />
         <Route path="/search" element={<Search />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
