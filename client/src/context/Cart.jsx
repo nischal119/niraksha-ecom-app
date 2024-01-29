@@ -5,7 +5,13 @@ const CartContext = createContext();
 const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
 
-  //default axios
+  useEffect(()=>{
+    let existingCartItem = localStorage.getItem("cart");
+    if(existingCartItem){
+      setCart(JSON.parse(existingCartItem))
+    }
+})
+     
 
   // console.log({ auth });
   return (

@@ -10,6 +10,7 @@ import { Prices } from "../components/Prices.js";
 import { Spin } from "antd";
 import { set } from "mongoose";
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/Cart.jsx";
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -19,6 +20,7 @@ const Home = () => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [cart, setCart] = useCart();
   //get total count
 
   const getProducts = async () => {
@@ -190,7 +192,17 @@ const Home = () => {
                     >
                       <CiSearch />
                     </button>
-                    <button className="btn btn-primary w-100">
+                    <button
+                      className="btn btn-primary w-100"
+                      onClick={() => {
+                        setCart([...cart, item]);
+                        localStorage.setItem(
+                          "cart",
+                          JSON.stringify([...cart, item])
+                        );
+                        toast.success("Product Added to Cart");
+                      }}
+                    >
                       <FaCartPlus />
                     </button>
                   </div>
