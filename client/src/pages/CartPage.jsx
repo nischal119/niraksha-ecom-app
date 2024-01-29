@@ -50,7 +50,13 @@ const CartPage = () => {
               </div>
             </div>
             <div className="row">
-              <div className="col-md-9">
+              <div
+                className="col-md-9"
+                style={{
+                  maxHeight: "70vh",
+                  overflowY: "scroll",
+                }}
+              >
                 <div className="d-flex flex-wrap flex-column">
                   {" "}
                   {cart?.map((item) => (
