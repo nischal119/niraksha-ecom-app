@@ -21,12 +21,12 @@ const Login = () => {
       });
 
       if (res.data.success) {
-        toast.success(`Namastey ${localStorage.getItem("name")}`);
         setAuth({
           ...auth,
           user: res?.data?.user,
           token: res?.data?.token,
         });
+        toast.success(`Namastey ${localStorage.getItem("name")}`);
         localStorage.setItem("auth", JSON.stringify(res?.data));
 
         navigate(location.state || "/");

@@ -199,3 +199,52 @@ export const testController = async (req, res) => {
     });
   }
 };
+
+//update profile
+export const updateProfileController = async (req, res) => {
+  try {
+    const { name, phone, address, password } = req.body;
+    //validations
+    const user = await userModel.findById(req.user._id);
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+    if (password && password.length < 6) {
+      return res.status(400).json({
+        success: false,
+        message: "Password must be atleast 6 characters long",
+      });
+    }
+    //hash password
+
+    const hashedPassword = password ? await hashPassword(password) : undefined;
+
+    //update user
+    const updatedUser = await userModel.findByIdAndUpdate(
+      req.user._id,
+      {
+        name: name || user.name,
+
+        phone: phone || user.phone,
+        address: address || user.address,
+        password: hashedPassword,
+      },
+      { new: true }
+    );
+    res.status(200).json({
+      success: true,
+      message: "Profile updated successfully",
+      updatedUser,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "Error in update profile",
+      error,
+    });
+  }
+};

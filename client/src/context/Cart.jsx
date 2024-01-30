@@ -10,7 +10,7 @@ const CartProvider = ({ children }) => {
     if(existingCartItem){
       setCart(JSON.parse(existingCartItem))
     }
-})
+},[])
      
 
   // console.log({ auth });

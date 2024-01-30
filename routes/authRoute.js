@@ -3,7 +3,8 @@ import {
   forgotPasswordController,
   loginController,
   registerController,
-  testController
+  testController,
+  updateProfileController
 } from "../controllers/authController.js";
 import {
   isAdmin,
@@ -41,3 +42,6 @@ router.get("/user-auth", requireSigninProtected, (req, res) => {
 router.get("/admin-auth", requireSigninProtected, isAdmin, (req, res) => {
   res.status(200).send({ ok: true });
 });
+
+//update profile
+router.put("/update-profile", requireSignin,updateProfileController); 
