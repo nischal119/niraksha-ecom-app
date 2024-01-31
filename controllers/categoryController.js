@@ -1,7 +1,6 @@
 import slugify from "slugify";
 import categoryModel from "../models/categoryModel.js";
 
-
 export const createCategoryController = async (req, res) => {
   try {
     const { name } = req.body;
@@ -79,7 +78,7 @@ export const updateCategoryController = async (req, res) => {
 //get all categories
 export const getCategoriesController = async (req, res) => {
   try {
-    const category = await categoryModel.find({});
+    const category = await categoryModel.find({}).sort({ createdAt: -1 });
     res.status(200).send({
       message: "All categories",
       success: true,

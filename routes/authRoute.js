@@ -1,9 +1,12 @@
 import express from "express";
 import {
   forgotPasswordController,
+  getALlOrdersController,
+  getOrdersController,
   loginController,
   registerController,
   testController,
+  updateOrderStatusController,
   updateProfileController
 } from "../controllers/authController.js";
 import {
@@ -45,3 +48,14 @@ router.get("/admin-auth", requireSigninProtected, isAdmin, (req, res) => {
 
 //update profile
 router.put("/update-profile", requireSignin,updateProfileController); 
+
+
+//order
+router.get("/orders", requireSignin, getOrdersController);
+
+//all orders
+router.get("/all-orders", requireSignin, getALlOrdersController);
+
+//order status update
+
+router.put("/order-status/:orderId", requireSignin, isAdmin, updateOrderStatusController);

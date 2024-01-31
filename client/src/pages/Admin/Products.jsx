@@ -18,7 +18,6 @@ const Products = () => {
       } else {
         toast.error(data?.message);
       }
-      
     } catch (error) {
       console.log(error);
       toast.error("Error loading products");
@@ -30,7 +29,7 @@ const Products = () => {
 
   return (
     <Layout>
-      <div className="row">
+      <div className="row m-3 p-3">
         <div className="col-md-3">
           <AdminMenu />
         </div>

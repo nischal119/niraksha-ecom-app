@@ -1,16 +1,14 @@
-import React, { useEffect, useState } from "react";
-import Layout from "../components/Layout/Layout";
-import { useAuth } from "../context/Auth.jsx";
+import { Carousel, Checkbox, Radio, Spin } from "antd";
 import axios from "axios";
+import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { CiSearch } from "react-icons/ci";
 import { FaCartPlus } from "react-icons/fa";
-import { Checkbox, Radio } from "antd";
-import { Prices } from "../components/Prices.js";
-import { Spin } from "antd";
-import { set } from "mongoose";
 import { useNavigate } from "react-router-dom";
+import Layout from "../components/Layout/Layout";
+import { Prices } from "../components/Prices.js";
 import { useCart } from "../context/Cart.jsx";
+import MyCarousel from "../components/MyCarousel.jsx";
 const Home = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -130,39 +128,60 @@ const Home = () => {
     loadMore();
   }, [page]);
 
+  //carousel Images
+
+  const images = [
+    "../../public/Images/banner6.jpg",
+    "../../public/Images/banner1.jpg",
+    "../../public/Images/banner2.jpg",
+    "../../public/Images/banner3.jpg",
+
+    "../../public/Images/banner5.jpg",
+  ];
   return (
     <Layout title={"All products - Best offers"}>
+      <div className="row">
+        <div className="col-md-12">
+          <h1 className="text-center mt-3">Hot Offers Just For You</h1>
+          <MyCarousel images={images} />
+        </div>
+      </div>
       <div className="row mt-3 px-1">
         <div className="col-md-3">
           <h4 className="text-center ">Filter by category</h4>
-          <div className="d-flex flex-column ">
+          <hr />
+          <div className="d-flex flex-column px-3 ">
             {categories?.map((item) => (
               <Checkbox
                 key={item._id}
                 checked={checked.includes(item._id)}
                 onChange={(e) => handelFilter(e.target.checked, item._id)}
+                className=""
               >
                 {item.name}
               </Checkbox>
             ))}
           </div>
-          <h4 className="text-center mt-4">Filter by Price</h4>
-          <div className="d-flex flex-column">
-            <Radio.Group
-              value={radio}
-              onChange={(e) => setRadio(e.target.value)}
-              className="flex-column"
-            >
-              {Prices.map((item) => (
-                <div className="flex-column">
-                  <Radio key={item._id} value={item.array}>
-                    {item.name}
-                  </Radio>
-                </div>
-              ))}
-            </Radio.Group>
+          <div className="">
+            <h4 className="text-center mt-4">Filter by Price</h4>
+            <hr />
+            <div className="d-flex flex-column">
+              <Radio.Group
+                value={radio}
+                onChange={(e) => setRadio(e.target.value)}
+                className="flex-column justify-content-center align-items-center px-3"
+              >
+                {Prices.map((item) => (
+                  <div className="flex-column ">
+                    <Radio key={item._id} value={item.array}>
+                      {item.name}
+                    </Radio>
+                  </div>
+                ))}
+              </Radio.Group>
+            </div>
 
-            <button className="btn btn-danger" onClick={clearFilters}>
+            <button className="btn btn-danger mt-4 mx-3" onClick={clearFilters}>
               Clear Filter
             </button>
           </div>
@@ -213,7 +232,7 @@ const Home = () => {
           <div className="m-2 p-3 ">
             {products && products.length < total && (
               <button
-                className="btn btn-primary w-100 mb-3"
+                className="btn btn-primary w-50 mb-3"
                 onClick={(e) => {
                   e.preventDefault();
                   // setLoading(true);

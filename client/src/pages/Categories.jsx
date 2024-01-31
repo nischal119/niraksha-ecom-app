@@ -7,12 +7,14 @@ const Categories = () => {
   const categories = useCategory();
   return (
     <Layout title={"All Categories"}>
-      <div className="container">
+      <div className="container row">
         <div className="row">
-          {categories?.map((item) =>  (
-            <div className="col-md-6 mt-5 gx-3 ">
+          {categories?.map((item) => (
+            <div className="col-md-6 mt-5 gx-3 gy-3 " key={item._id}>
               <button className="btn btn-primary ">
-                <Link to={`/category/${item.slug}`} className="btn btn-primary">{item.name}</Link>
+                <Link to={`/category/${item.slug}`} className="btn cat-btn">
+                  {item.name}
+                </Link>
               </button>
             </div>
           ))}

@@ -1,13 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout/Layout";
 import { useCart } from "../context/Cart";
 import { useAuth } from "../context/Auth";
 import { useNavigate } from "react-router-dom";
-
+import DropIn from "braintree-web-drop-in-react";
+import axios from "axios";
+import { set } from "mongoose";
+import toast from "react-hot-toast";
+import { Spin } from "antd";
 const CartPage = () => {
   const [cart, setCart] = useCart();
   const [auth] = useAuth();
   const navigate = useNavigate();
+
+  const [clientToken, setClientToken] = useState("");
+  const [instance, setInstance] = useState("");
+  const [loading, setLoading] = useState(false);
   //total price
 
   const totalPrice = () => {
@@ -21,6 +29,45 @@ const CartPage = () => {
         currency: "INR",
       });
     } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //get payment gateway token
+  const getToken = async () => {
+    try {
+      const { data } = await axios.get(
+        "http://localhost:8080/api/v1/product/braintree/token"
+      );
+
+      setClientToken(data.response.clientToken);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    getToken();
+  }, [auth?.token]);
+
+  //handel payment
+  const handelPayment = async () => {
+    try {
+      setLoading(true);
+      const { nonce } = await instance.requestPaymentMethod();
+      const { data } = await axios.post(
+        "http://localhost:8080/api/v1/product/braintree/payment",
+        {
+          nonce,
+          cart,
+        }
+      );
+      setLoading(false);
+      localStorage.removeItem("cart");
+      setCart([]);
+      navigate("/dashboard/user/orders");
+      toast.success("Payment Successfull");
+    } catch (error) {
+      setLoading(false);
       console.log(error);
     }
   };
@@ -59,7 +106,10 @@ const CartPage = () => {
               <div className="d-flex flex-wrap flex-column">
                 {" "}
                 {cart?.map((item) => (
-                  <div className="row m-3 p-3 " key={item._id}>
+                  <div
+                    className="row m-3 p-3 d-flex justify-content-center align-items-center"
+                    key={item._id}
+                  >
                     <div className="col-md-4 ">
                       <img
                         // className="card-img-top"
@@ -73,7 +123,6 @@ const CartPage = () => {
                     </div>
                     <div className="col-md-8 text-center">
                       <h5 className="card-title">{item?.name}</h5>
-
                       <p className="card-text">Rs.{item?.price}</p>
                       <button
                         className="btn btn-danger w-50"
@@ -139,6 +188,30 @@ const CartPage = () => {
                     )}
                   </div>
                 )}
+                <div className="mt-5">
+                  {!clientToken || !cart?.length ? (
+                    ""
+                  ) : (
+                    <DropIn
+                      options={{
+                        authorization: clientToken,
+                        paypal: {
+                          flow: "vault",
+                        },
+                      }}
+                      onInstance={(instance) => setInstance(instance)}
+                    />
+                  )}
+
+                  <button
+                    className="btn btn-warning w-100"
+                    onClick={handelPayment}
+                    disabled={!instance || !auth?.user?.address}
+                  >
+                    {loading ? <Spin /> : "Pay Now"}
+                  </button>
+                  {/* {console.log(instance)} */}
+                </div>
               </div>
             )}
           </div>
