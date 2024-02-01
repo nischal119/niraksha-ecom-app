@@ -31,8 +31,8 @@ const Orders = () => {
   }, []);
 
   return (
-    <Layout>
-      <div className="container-fluid p-3 m-3">
+    <Layout title={"Your Orders"}>
+      <div className="container">
         <div className="row">
           <div className="col-md-3">
             <UserMenu />
@@ -40,11 +40,11 @@ const Orders = () => {
           <div className="col-md-9">
             {orders?.length > 0 ? (
               <>
-                <h2 className="text-center">All Orders</h2>
+                <h2 className="text-center mt-3">All Orders</h2>
 
-                {orders?.map((item, index) => {
-                  return (
-                    <div className="border shadow">
+                {orders?.map((item, index) => (
+                  <div className="border shadow" key={index}>
+                    <div className="table-responsive">
                       <table className="table">
                         <thead>
                           <tr>
@@ -61,7 +61,6 @@ const Orders = () => {
                             <td>{index + 1}</td>
                             <td>{item?.status}</td>
                             <td>{item?.buyer?.name}</td>
-
                             <td>{moment(item?.createdAt).fromNow()}</td>
                             <td>
                               {item?.payment.success ? "Success" : "Failed"}
@@ -70,33 +69,37 @@ const Orders = () => {
                           </tr>
                         </tbody>
                       </table>
-                      <div className="container">
-                        {orderProducts?.map((item) => (
-                          <div
-                            className="row m-3 p-3 d-flex justify-content-center align-items-center"
-                            key={item._id}
-                          >
-                            <div className="col-md-2 ">
-                              <img
-                                // className="card-img-top"
-                                style={{
-                                  minHeight: "200px",
-                                  maxHeight: "200px",
-                                }}
-                                src={`http://localhost:8080/api/v1/product/product-photo/${item?._id}`}
-                                alt="Card image cap"
-                              />
-                            </div>
-                            <div className="col-md-8 text-center">
-                              <h5 className="card-title">{item?.name}</h5>
-                              <p className="card-text">Rs.{item?.price}</p>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
                     </div>
-                  );
-                })}
+                    <div className="container">
+                      {orderProducts?.map((product) => (
+                        <div
+                          className="row m-3 p-3"
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                          key={product._id}
+                        >
+                          <div className="col-md-2 ">
+                            <img
+                              style={{
+                                minHeight: "200px",
+                                maxHeight: "200px",
+                              }}
+                              src={`http://localhost:8080/api/v1/product/product-photo/${product?._id}`}
+                              alt="Card image cap"
+                            />
+                          </div>
+                          <div className="col-md-8 text-center d-flex flex-column justify-content-center align-items-center">
+                            <h5 className="card-title">{product?.name}</h5>
+                            <p className="card-text">Rs.{product?.price}</p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
               </>
             ) : (
               <div className="d-flex justiy-content-center align-items-center flex-column">
@@ -107,7 +110,7 @@ const Orders = () => {
                     navigate("/");
                   }}
                 >
-                  Order Now ?
+                  Order Now?
                 </button>
               </div>
             )}

@@ -36,7 +36,7 @@ const ForgotPassword = () => {
     }
   };
   return (
-    <Layout>
+    <Layout title={"Forgot password"}>
       <div className="register">
         <h1>Forgot Password</h1>
 

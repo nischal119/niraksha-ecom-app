@@ -54,15 +54,15 @@ const AdminOrders = () => {
   };
   return (
     <Layout title={"All Orders Data"}>
-      <div className="row m-3 p-3">
+      <div className="row m-lg-3 p-lg-3">
         <div className="col-md-3">
           <AdminMenu />
         </div>
         <div className="col-md-9">
-          <h1>All Orders</h1>
-          {orders?.map((item, index) => {
-            return (
-              <div className="border shadow">
+          <h1 className="text-center mt-4">All Orders</h1>
+          {orders?.map((item, index) => (
+            <div className="border shadow" key={index}>
+              <div className="table-responsive">
                 <table className="table">
                   <thead>
                     <tr>
@@ -93,40 +93,38 @@ const AdminOrders = () => {
                         </Select>
                       </td>
                       <td>{item?.buyer?.name}</td>
-
                       <td>{moment(item?.createdAt).fromNow()}</td>
                       <td>{item?.payment.success ? "Success" : "Failed"}</td>
                       <td>{item?.products?.length}</td>
                     </tr>
                   </tbody>
                 </table>
-                <div className="container">
-                  {orderProducts?.map((item) => (
-                    <div
-                      className="row m-3 p-3 d-flex justify-content-center align-items-center"
-                      key={item._id}
-                    >
-                      <div className="col-md-2 ">
-                        <img
-                          // className="card-img-top"
-                          style={{
-                            minHeight: "200px",
-                            maxHeight: "200px",
-                          }}
-                          src={`http://localhost:8080/api/v1/product/product-photo/${item?._id}`}
-                          alt="Card image cap"
-                        />
-                      </div>
-                      <div className="col-md-8 text-center">
-                        <h5 className="card-title">{item?.name}</h5>
-                        <p className="card-text">Rs.{item?.price}</p>
-                      </div>
-                    </div>
-                  ))}
-                </div>
               </div>
-            );
-          })}
+              <div className="container">
+                {orderProducts?.map((product) => (
+                  <div
+                    className="row m-3 p-3 d-flex justify-content-center align-items-center"
+                    key={product._id}
+                  >
+                    <div className="col-md-2 ">
+                      <img
+                        style={{
+                          minHeight: "200px",
+                          maxHeight: "200px",
+                        }}
+                        src={`http://localhost:8080/api/v1/product/product-photo/${product?._id}`}
+                        alt="Card image cap"
+                      />
+                    </div>
+                    <div className="col-md-8 text-center">
+                      <h5 className="card-title">{product?.name}</h5>
+                      <p className="card-text">Rs.{product?.price}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </Layout>

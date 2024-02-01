@@ -30,23 +30,33 @@ const CategoryProduct = () => {
   }, [params?.slug]);
 
   return (
-    <Layout>
+    <Layout title={"Amazing Categories"}>
       <div className="container">
-        <h4 className="text-center">Category-{category?.name}</h4>
+        <h4 className="text-center mt-5">Category-{category?.name}</h4>
         <h4 className="text-center">{products?.length} results found</h4>
         <div className="row">
-          <div className="d-flex flex-wrap">
+          <div className="d-flex flex-wrap d-flex justify-content-center align-items-center">
             {" "}
             {products?.map((item) => (
-              <div className="card m-3 p-3 " key={item._id}>
+              <div className="card  m-3 p-3 " key={item._id}>
                 <div className="card" style={{ width: "18rem" }}>
                   <img
                     className="card-img-top"
                     src={`http://localhost:8080/api/v1/product/product-photo/${item?._id}`}
                     alt="Card image cap"
+                    style={{
+                      minHeight: "300px",
+                      maxHeight: "300px",
+                      padding: "10px",
+                      maxWidth: "100%",
+                      minWidth: "250px",
+                      objectFit: "contain",
+                    }}
                   />
                   <div className="card-body">
-                    <h5 className="card-title">{item?.name}</h5>
+                    <h5 className="card-title">
+                      {item?.name.substring(0, 20)}...
+                    </h5>
 
                     <p className="card-text">
                       {item?.description.substring(0, 30)}...

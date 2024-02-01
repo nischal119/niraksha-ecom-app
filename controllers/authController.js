@@ -2,6 +2,7 @@ import { comparePassword, hashPassword } from "../helpers/authHelper.js";
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 import JWT from "jsonwebtoken";
+import nodemailer from "nodemailer";
 export const registerController = async (req, res) => {
   try {
     const { name, email, password, phone, address, answer } = req.body;
@@ -318,5 +319,45 @@ export const updateOrderStatusController = async (req, res) => {
       message: "Error in update order status",
       error,
     });
+  }
+};
+
+//send email controller
+export const sendEmailController = async (req, res) => {
+  try {
+    const { senderName, senderEmail, adminEmail } = req.body;
+    // console.log(senderName, senderEmail, adminEmail);
+   const transporter = nodemailer.createTransport({
+     host: "smtp.forwardemail.net",
+     port: 465,
+     secure: true,
+     auth: {
+       // TODO: replace `user` and `pass` values from <https://forwardemail.net>
+       user: "",
+       pass: "REPLACE-WITH-YOUR-GENERATED-PASSWORD",
+     },
+   });
+
+    const mailOptions = {
+      from: process.env.GMAIL_USER_NAME, //  Gmail email
+      to: adminEmail,
+      subject: "New Seller Request",
+      text: `Name: ${senderName}\nEmail: ${senderEmail}\n\nPlease grant seller access.`,
+    };
+
+    const info = await transporter.sendMail(mailOptions);
+    console.log("Email sent: " + info.response);
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        console.error("Error sending email:", error);
+        res.status(500).send("Error sending email");
+      } else {
+        console.log("Email sent: " + info.response);
+        res.status(200).send("Email sent successfully");
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Error sending email");
   }
 };

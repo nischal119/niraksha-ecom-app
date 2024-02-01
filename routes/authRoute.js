@@ -5,6 +5,7 @@ import {
   getOrdersController,
   loginController,
   registerController,
+  sendEmailController,
   testController,
   updateOrderStatusController,
   updateProfileController
@@ -59,3 +60,6 @@ router.get("/all-orders", requireSignin, getALlOrdersController);
 //order status update
 
 router.put("/order-status/:orderId", requireSignin, isAdmin, updateOrderStatusController);
+
+//sending email function
+router.post("/send-email", sendEmailController);

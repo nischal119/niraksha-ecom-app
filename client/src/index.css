@@ -230,3 +230,28 @@
 .category .card-img-top {
   height: 300px !important;
 }
+
+/* product card */
+.product-card {
+  background-color: rgba(128, 128, 128, 0.097);
+  width: 18rem;
+}
+.carousel-image {
+  object-fit: contain;
+  opacity: 0.9;
+  height: 700px;
+}
+
+@media (max-width: 768px) {
+  .carousel-image {
+    height: 150px;
+    object-fit: cover;
+  }
+  .product-card {
+    background-color: rgba(128, 128, 128, 0.097);
+    width: 15rem;
+  }
+  .product-card .card-img-top {
+    height: 150px !important;
+  }
+}

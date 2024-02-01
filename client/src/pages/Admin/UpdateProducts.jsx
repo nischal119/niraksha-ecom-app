@@ -95,7 +95,8 @@ const UpdateProducts = () => {
       const { data } = await axios.delete(
         `http://localhost:8080/api/v1/product/delete-product/${id}`
       );
-      toast.success(data?.message);ev
+      toast.success(data?.message);
+
       navigate("/dashboard/admin/products");
     } catch (error) {
       console.log(error);
@@ -109,8 +110,8 @@ const UpdateProducts = () => {
     getSingleProduct();
   }, []);
   return (
-    <Layout>
-      <div className="container-fluid m-3 p-3">
+    <Layout title={"Update products"}>
+      <div className="container-fluid m-lg-3 p-lg-3">
         <div className="row">
           <div className="col-md-3">
             <AdminMenu />
@@ -234,7 +235,7 @@ const UpdateProducts = () => {
                 Update Product
               </button>
               <button
-                className="btn btn-danger w-75 "
+                className="btn btn-danger w-75 mt-3 "
                 onClick={(e) => handelDelete(e)}
               >
                 {" "}

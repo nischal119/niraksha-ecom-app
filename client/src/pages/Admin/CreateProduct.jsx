@@ -68,8 +68,8 @@ const CreateProduct = () => {
     getAllCategories();
   }, []);
   return (
-    <Layout>
-      <div className="container-fluid m-3 p-3">
+    <Layout title={"Create products"}>
+      <div className="container-fluid m-lg-3 p-lg-3">
         <div className="row">
           <div className="col-md-3">
             <AdminMenu />

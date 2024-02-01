@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 const AdminMenu = () => {
   return (
     <>
-      <div className="text-center">
+      <div className="text-center mt-4" title={"Ecommercre-Admin"}>
         <div className="list-group">
           <h3>Admin Panel</h3>
 

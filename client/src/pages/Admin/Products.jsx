@@ -28,8 +28,8 @@ const Products = () => {
   }, []);
 
   return (
-    <Layout>
-      <div className="row m-3 p-3">
+    <Layout title={"Best Quality products"}>
+      <div className="row m-lg-3 p-lg-3">
         <div className="col-md-3">
           <AdminMenu />
         </div>
@@ -47,10 +47,22 @@ const Products = () => {
                       className="card-img-top"
                       src={`http://localhost:8080/api/v1/product/product-photo/${item?._id}`}
                       alt="Card image cap"
+                      style={{
+                        minHeight: "300px",
+                        maxHeight: "300px",
+                        padding: "10px",
+                        maxWidth: "100%",
+                        minWidth: "250px",
+                        objectFit: "contain",
+                      }}
                     />
                     <div className="card-body">
-                      <h5 className="card-title">{item?.name}</h5>
-                      <p className="card-text">{item?.description}</p>
+                      <h5 className="card-title">
+                        {item?.name.substring(0, 20)}...
+                      </h5>
+                      <p className="card-text">
+                        {item?.description.substring(0, 30)}...
+                      </p>
                     </div>
                   </div>
                 </div>

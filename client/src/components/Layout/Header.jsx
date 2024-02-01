@@ -68,12 +68,13 @@ const Header = () => {
                   }}
                 >
                   <li>
-                    <Link className="dropdown-item " to={"/categories"}>
+                    {/* <Link className="dropdown-item " to={"/categories"}>
                       All Categories
-                    </Link>
+                    </Link> */}
                   </li>
                   {categories?.map((item) => (
                     <Link
+                      key={item?._id}
                       className="dropdown-item "
                       to={`/category/${item.slug}`}
                     >
@@ -127,6 +128,16 @@ const Header = () => {
                           Log Out?
                         </NavLink>
                       </li>
+                      {auth?.user?.role !== 1 && (
+                        <li className="nav-item">
+                          <NavLink
+                            className=" dropdown-item "
+                            to={"/become-seller"}
+                          >
+                            Become a Seller ?
+                          </NavLink>
+                        </li>
+                      )}
                     </ul>
                   </li>
                 </>

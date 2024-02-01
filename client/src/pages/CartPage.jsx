@@ -16,13 +16,22 @@ const CartPage = () => {
   const [clientToken, setClientToken] = useState("");
   const [instance, setInstance] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const calculateProductTotal = (productId) => {
+    const productItems = cart.filter((product) => product._id === productId);
+    const quantity = productItems.length;
+    const totalPrice = productItems.reduce((sum, item) => sum + item.price, 0);
+    return { quantity, totalPrice };
+  };
+
   //total price
 
   const totalPrice = () => {
     try {
       let total = 0;
-      cart.map((item) => {
-        total += item.price;
+      cart.forEach((item) => {
+        const { totalPrice } = calculateProductTotal(item._id);
+        total += totalPrice;
       });
       return total.toLocaleString("en-IN", {
         style: "currency",
@@ -71,8 +80,13 @@ const CartPage = () => {
       console.log(error);
     }
   };
+
+  const getProductQuantity = (productId) => {
+    return cart.filter((product) => product._id === productId).length;
+  };
+
   return (
-    <Layout>
+    <Layout title={"E-Commerce-Cart"}>
       <div className="container">
         <>
           <div className="row ">
@@ -105,36 +119,44 @@ const CartPage = () => {
             >
               <div className="d-flex flex-wrap flex-column">
                 {" "}
-                {cart?.map((item) => (
+                {Object.values(
+                  cart.reduce((acc, item) => {
+                    if (!acc[item._id]) {
+                      acc[item._id] = { ...item, count: 1 };
+                    } else {
+                      acc[item._id].count += 1;
+                    }
+                    return acc;
+                  }, {})
+                ).map((groupedItem) => (
                   <div
                     className="row m-3 p-3 d-flex justify-content-center align-items-center"
-                    key={item._id}
+                    key={groupedItem._id}
                   >
-                    <div className="col-md-4 ">
+                    <div className="col-md-4 d-flex justify-content-center align-items-center">
                       <img
-                        // className="card-img-top"
                         style={{
                           minHeight: "200px",
                           maxHeight: "200px",
                         }}
-                        src={`http://localhost:8080/api/v1/product/product-photo/${item?._id}`}
+                        src={`http://localhost:8080/api/v1/product/product-photo/${groupedItem?._id}`}
                         alt="Card image cap"
                       />
                     </div>
                     <div className="col-md-8 text-center">
-                      <h5 className="card-title">{item?.name}</h5>
-                      <p className="card-text">Rs.{item?.price}</p>
+                      <h5 className="card-title">{groupedItem?.name}</h5>
+                      <p className="card-text">Rs.{groupedItem?.price}</p>
                       <button
                         className="btn btn-danger w-50"
                         onClick={() => {
                           const newCart = cart.filter(
-                            (product) => product._id !== item._id
+                            (product) => product._id !== groupedItem._id
                           );
                           setCart(newCart);
                           localStorage.setItem("cart", JSON.stringify(newCart));
                         }}
                       >
-                        Remove from Cart ({item.length})
+                        Remove from Cart ({groupedItem.count})
                       </button>
                     </div>
                   </div>
@@ -195,9 +217,9 @@ const CartPage = () => {
                     <DropIn
                       options={{
                         authorization: clientToken,
-                        paypal: {
-                          flow: "vault",
-                        },
+                        // paypal: {
+                        //   flow: "vault",
+                        // },
                       }}
                       onInstance={(instance) => setInstance(instance)}
                     />

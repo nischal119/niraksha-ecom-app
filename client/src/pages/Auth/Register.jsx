@@ -41,7 +41,7 @@ const Register = () => {
 
   // console.log(process.env.REACT_APP_API);
   return (
-    <Layout>
+    <Layout title={"Register"}>
       <div className="register">
         <h1>Register</h1>
 

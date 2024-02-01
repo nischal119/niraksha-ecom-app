@@ -38,7 +38,7 @@ const Login = () => {
 
   // console.log(process.env.REACT_APP_API);
   return (
-    <Layout>
+    <Layout title={"Login"}>
       <div className="register">
         <h1>Login</h1>
 

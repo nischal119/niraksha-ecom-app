@@ -38,11 +38,15 @@ const ProductDetails = () => {
     }
   };
   return (
-    <Layout>
-      <div className="row container mt-2 product-details d-flex justify-content-center align-items-center">
-        <div className="col-md-3">
+    <Layout
+      title={"Product Details"}
+      className="d-flex justify-content-center align-items-center"
+    >
+      <div className="row container mt-2 product-details d-flex justify-content-center align-items-center ">
+        <div className="col-md-3"></div>
+        <div className="col-md-3  ">
           <img
-            className="card-img-top"
+            className="card-img-top mb-5"
             src={`http://localhost:8080/api/v1/product/product-photo/${product?._id}`}
             alt="Card image cap"
           />
@@ -50,8 +54,9 @@ const ProductDetails = () => {
         <div className="col-md-6 text-center product-details-info">
           <h1>Product Details</h1>
           <hr />
-          <h6>Name:{product?.name}</h6>
-          <h6>Decription:{product?.description}</h6>
+          <h2>{product?.name}</h2>
+          <h6>Decription:</h6>
+          <p> {product?.description}</p>
           <h6>
             Price :
             {product?.price?.toLocaleString("en-IN", {
@@ -68,9 +73,9 @@ const ProductDetails = () => {
         </div>
       </div>
       {relatedProducts.length > 0 && (
-        <div className="row mt-5">
+        <div className="row mt-5  ">
           <h1 className="text-center">Similar Products</h1>
-          <div className="d-flex flex-wrap">
+          <div className="d-flex flex-wrap justify-content-center align-items-center">
             {" "}
             {relatedProducts?.map((item) => (
               <div className="card m-3 p-3 " key={item._id}>

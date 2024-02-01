@@ -25,6 +25,7 @@ import Categories from "./pages/Categories.jsx";
 import CategoryProduct from "./pages/CategoryProduct.jsx";
 import CartPage from "./pages/CartPage.jsx";
 import AdminOrders from "./pages/Admin/AdminOrders.jsx";
+import BecomeSeller from "./pages/BecomeSeller.jsx";
 function App() {
   return (
     <>
@@ -56,6 +57,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/become-seller" element={<BecomeSeller />} />
         <Route path="*" element={<PagenotFound />} />
       </Routes>
     </>

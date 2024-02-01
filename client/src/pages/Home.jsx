@@ -187,61 +187,81 @@ const Home = () => {
           </div>
         </div>
         <div className="col-md-9">
-          <h1 className="text-center">All Products</h1>
-          <div className="d-flex flex-wrap">
-            {" "}
-            {products?.map((item) => (
-              <div className="card m-3 p-3 " key={item._id}>
-                <div className="card" style={{ width: "18rem" }}>
-                  <img
-                    className="card-img-top"
-                    src={`http://localhost:8080/api/v1/product/product-photo/${item?._id}`}
-                    alt="Card image cap"
-                  />
-                  <div className="card-body">
-                    <h5 className="card-title">{item?.name}</h5>
+          {products?.length > 0 && (
+            <h1 className="text-center">All Products</h1>
+          )}
+          <div className="d-flex justify-content-center align-items-center flex-column">
+            <div className="d-flex flex-wrap justify-content-center align-items-center">
+              {products?.length > 0 ? (
+                products?.map((item) => (
+                  <div className="card m-3 p-3 " key={item._id}>
+                    <div className="card product-card">
+                      <img
+                        className="card-img-top"
+                        src={`http://localhost:8080/api/v1/product/product-photo/${item?._id}`}
+                        alt="Card image cap"
+                        style={{
+                          maxHeight: "300px",
+                          minHeight: "300px",
+                          padding: "10px",
+                          maxWidth: "100%",
+                          minWidth: "250px",
+                          objectFit: "contain",
+                        }}
+                      />
+                      <div className="card-body">
+                        <h5 className="card-title">
+                          {item?.name.substring(0, 20)}...
+                        </h5>
 
-                    <p className="card-text">
-                      {item?.description.substring(0, 30)}...
-                    </p>
-                    <p className="card-text">Rs.{item?.price}</p>
-                    <button
-                      className="btn btn-success w-100 mb-3"
-                      onClick={() => navigate(`/product/${item?.slug}`)}
-                    >
-                      <CiSearch />
-                    </button>
-                    <button
-                      className="btn btn-primary w-100"
-                      onClick={() => {
-                        setCart([...cart, item]);
-                        localStorage.setItem(
-                          "cart",
-                          JSON.stringify([...cart, item])
-                        );
-                        toast.success("Product Added to Cart");
-                      }}
-                    >
-                      <FaCartPlus />
-                    </button>
+                        <p className="card-text">
+                          {item?.description.substring(0, 50)}...
+                        </p>
+                        <h5 className="card-text">Rs.{item?.price}</h5>
+                        <button
+                          className="btn btn-success w-100 mb-3"
+                          onClick={() => navigate(`/product/${item?.slug}`)}
+                        >
+                          <CiSearch />
+                        </button>
+                        <button
+                          className="btn btn-primary w-100"
+                          onClick={() => {
+                            setCart([...cart, item]);
+                            localStorage.setItem(
+                              "cart",
+                              JSON.stringify([...cart, item])
+                            );
+                            toast.success("Product Added to Cart");
+                          }}
+                        >
+                          <FaCartPlus />
+                        </button>
+                      </div>
+                    </div>
                   </div>
+                ))
+              ) : (
+                <div className="text-center">
+                  <h1>No products found in the filter window</h1>
+                  <h3>Try a diffrent filter</h3>
                 </div>
-              </div>
-            ))}
-          </div>
-          <div className="m-2 p-3 ">
-            {products && products.length < total && (
-              <button
-                className="btn btn-primary w-50 mb-3"
-                onClick={(e) => {
-                  e.preventDefault();
-                  // setLoading(true);
-                  setPage(page + 1);
-                }}
-              >
-                {loading ? <Spin /> : "Load More"}
-              </button>
-            )}
+              )}
+            </div>
+            <div className="m-2 p-3 ">
+              {products && products.length < total && products?.length > 0 && (
+                <button
+                  className="btn btn-primary w-100 mb-3"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    // setLoading(true);
+                    setPage(page + 1);
+                  }}
+                >
+                  {loading ? <Spin /> : "Load More"}
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>

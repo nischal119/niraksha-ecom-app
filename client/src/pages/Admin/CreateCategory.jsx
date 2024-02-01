@@ -112,19 +112,20 @@ const CreateCategory = () => {
     getAllCategories();
   }, []);
   return (
-    <Layout>
-      <div className="container-fluid m-3 p-3">
+    <Layout title={"Create Categories"}>
+      <div className="container-fluid m-lg-3 p-lg-3">
         <div className="row">
           <div className="col-md-3">
             <AdminMenu />
           </div>
-          <div className="col-md-9">
+          <div className="col-md-9 d-flex flex-column justify-content-center align-items-center">
             <h1>Manage Category</h1>
             <div className="p-3 w-50">
               <CategoryForm
                 handelSubmit={handelSubmit}
                 value={name}
                 setValue={setName}
+                style={{ width: "300px" }}
               />
             </div>
             <div className="w-75">

@@ -38,9 +38,9 @@ const MyCarousel = ({ images }) => {
           >
             <img
               src={src}
-              className="d-block w-100"
+              className="d-block  carousel-image "
               alt={`Slide ${index + 1}`}
-              style={{ objectFit: "cover", opacity: "0.9", height: "600px" }}
+             
             />
           </div>
         ))}

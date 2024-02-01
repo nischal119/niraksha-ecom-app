@@ -58,8 +58,8 @@ const Profile = () => {
   };
 
   return (
-    <Layout>
-      <div className="container-fluid p-3 m-3">
+    <Layout title={"Profile"}>
+      <div className="container">
         <div className="row">
           <div className="col-md-3">
             <UserMenu />
