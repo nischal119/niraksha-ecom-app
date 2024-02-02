@@ -5,10 +5,9 @@ import {
   getOrdersController,
   loginController,
   registerController,
-  sendEmailController,
   testController,
   updateOrderStatusController,
-  updateProfileController
+  updateProfileController,
 } from "../controllers/authController.js";
 import {
   isAdmin,
@@ -48,8 +47,7 @@ router.get("/admin-auth", requireSigninProtected, isAdmin, (req, res) => {
 });
 
 //update profile
-router.put("/update-profile", requireSignin,updateProfileController); 
-
+router.put("/update-profile", requireSignin, updateProfileController);
 
 //order
 router.get("/orders", requireSignin, getOrdersController);
@@ -59,7 +57,11 @@ router.get("/all-orders", requireSignin, getALlOrdersController);
 
 //order status update
 
-router.put("/order-status/:orderId", requireSignin, isAdmin, updateOrderStatusController);
+router.put(
+  "/order-status/:orderId",
+  requireSignin,
+  isAdmin,
+  updateOrderStatusController
+);
 
 //sending email function
-router.post("/send-email", sendEmailController);
