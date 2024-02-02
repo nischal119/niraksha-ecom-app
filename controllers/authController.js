@@ -327,16 +327,16 @@ export const sendEmailController = async (req, res) => {
   try {
     const { senderName, senderEmail, adminEmail } = req.body;
     // console.log(senderName, senderEmail, adminEmail);
-   const transporter = nodemailer.createTransport({
-     host: "smtp.forwardemail.net",
-     port: 465,
-     secure: true,
-     auth: {
-       // TODO: replace `user` and `pass` values from <https://forwardemail.net>
-       user: "",
-       pass: "REPLACE-WITH-YOUR-GENERATED-PASSWORD",
-     },
-   });
+    const transporter = nodemailer.createTransport({
+      host: "smtp.forwardemail.net",
+      port: 465,
+      secure: true,
+      auth: {
+        // TODO: replace `user` and `pass` values from <https://forwardemail.net>
+        user: "strawluffy119@gmail.com",
+        pass: "nttu gjay urxu tpmv",
+      },
+    });
 
     const mailOptions = {
       from: process.env.GMAIL_USER_NAME, //  Gmail email

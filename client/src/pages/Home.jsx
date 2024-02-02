@@ -197,7 +197,7 @@ const Home = () => {
                   <div className="card m-3 p-3 " key={item._id}>
                     <div className="card product-card">
                       <img
-                        className="card-img-top"
+                        className="card-img-top hover-effect"
                         src={`http://localhost:8080/api/v1/product/product-photo/${item?._id}`}
                         alt="Card image cap"
                         style={{
